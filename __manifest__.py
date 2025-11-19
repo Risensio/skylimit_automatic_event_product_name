@@ -15,6 +15,7 @@
         Features:
         ---------
         * Automatically populate ticket name from product name
+        * Supports product variants - ticket name includes variant attributes
         * Works when creating new event tickets
         * Works when creating new event template tickets
         * Maintains data consistency between products and tickets
