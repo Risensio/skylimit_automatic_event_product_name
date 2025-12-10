@@ -1,6 +1,6 @@
 {
     'name': 'Skylimit Automatic Event Product Name',
-    'version': '18.0.2.1.0',
+    'version': '18.0.2.2.0',
     'category': 'Event',
     'summary': 'Automatically use product name as ticket name in events',
     'description': """
