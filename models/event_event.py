@@ -15,12 +15,21 @@ class EventTypeTicket(models.Model):
         Get the appropriate ticket name from a product.
         For variants: use the attribute values (e.g., "Blue, Large")
         For regular products: use the product name
+        Respects the current user's language context for translations.
         """
         if not product:
             return False
+
+        # Ensure we're using the correct language context
+        # Use self._context to get the current language, or fallback to user's language
+        lang = self._context.get('lang') or self.env.user.lang
+        product = product.with_context(lang=lang)
+
         # Check if product is a variant (has attribute values)
         if product.product_template_attribute_value_ids:
-            return ', '.join(product.product_template_attribute_value_ids.mapped('name'))
+            # Get translated attribute value names
+            attribute_values = product.product_template_attribute_value_ids.with_context(lang=lang)
+            return ', '.join(attribute_values.mapped('name'))
         return product.name
 
     @api.onchange('product_id')
@@ -74,12 +83,21 @@ class EventEventTicket(models.Model):
         Get the appropriate ticket name from a product.
         For variants: use the attribute values (e.g., "Blue, Large")
         For regular products: use the product name
+        Respects the current user's language context for translations.
         """
         if not product:
             return False
+
+        # Ensure we're using the correct language context
+        # Use self._context to get the current language, or fallback to user's language
+        lang = self._context.get('lang') or self.env.user.lang
+        product = product.with_context(lang=lang)
+
         # Check if product is a variant (has attribute values)
         if product.product_template_attribute_value_ids:
-            return ', '.join(product.product_template_attribute_value_ids.mapped('name'))
+            # Get translated attribute value names
+            attribute_values = product.product_template_attribute_value_ids.with_context(lang=lang)
+            return ', '.join(attribute_values.mapped('name'))
         return product.name
 
     @api.onchange('product_id')
